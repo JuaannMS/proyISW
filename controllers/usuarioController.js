@@ -46,8 +46,23 @@ const updateUsuario = (req,res) => {
 
 }
 
+const deleteUsuario = (req,res) => {
+    const { id } = req.params
+    Usuario.findByIdAndDelete(id, req.body, (error, usuario) => {
+        if (error) {
+            return res.status(400).send({ message: "No se pudo eliminar al usuario" })
+        }
+        if (!usuario) {
+            return res.status(404).send({ message: "No se encontro el usuario" })
+        }
+        return res.status(200).send({ message: "Usuario eliminado" })
+    })
+
+}
+
 module.exports = {
     createUsuario,
     getUsuario,
-    updateUsuario
+    updateUsuario,
+    deleteUsuario
 }
