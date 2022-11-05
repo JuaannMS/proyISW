@@ -1,0 +1,49 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const usuarioSchema = new Schema({
+    id_:{
+        type: [Schema.ObjectId],
+        required: true
+    },
+    rut:{
+        type: String,
+        required: true
+    },
+    nombre: {
+        type: String,
+        required: true,
+        minLength: 1,
+        maxLength: 100
+    },
+    direccion:{
+        type: String,
+        required: true,
+        minLength: 1,
+        maxLength: 100
+    },
+    fechaCumpleanio:{
+        type: Date,
+        required:true
+    },
+    correo:{
+        type:String,
+        required: true,
+        minLength: 10,
+        maxLength:100
+    },
+    telefono:{
+        type:Number,
+        required:true,
+        minLength: 9,
+        maxLength: 15
+    }
+    //,
+    //idPublicacion:{
+    //    type: [Schema.ObjectId],
+    //    ref: 'publicacion'
+    //},
+
+})
+
+module.exports = mongoose.model('usuario', usuarioSchema);

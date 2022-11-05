@@ -1,0 +1,139 @@
+{
+    "usuario":{
+
+      "id_":{
+        "type": "Schema.ObjectId",
+        "required": true
+      },
+      "rut":{
+        "type":"String",
+        "required":true
+      },
+      "nombre": {
+        "type": "String",
+        "required": true,
+        "minLength": 1,
+        "maxLength": 100
+      },
+      "direccion":{
+        "type": "String",
+        "required": true,
+        "minLength": 1,
+        "maxLength": 100
+      },
+      "fechaCumpleanio":{
+        "type": "Date",
+        "required":true
+      },
+      "correo":{
+        "type":"String",
+        "required": true,
+        "minLength": 10,
+        "maxLength":100
+      },
+      "telefono":{
+        "type":"Number",
+        "required":true,
+        "minLength": 9,
+        "maxLength": 15
+      },
+      "idPublicacion":{
+        "type": "Schema.ObjectId",
+        "ref": "publicacion"
+      }
+
+
+    },
+    "publicacion":{
+
+    "id_":{
+        "type":"Schema.ObjectId",
+        "required":true
+      },
+    "titulo":{
+        "type": "String",
+        "required":true,
+        "minLength":1,
+        "maxLength":100
+    },
+    "etiqueta":{
+        "type":"String",
+        "required":true,
+        "minLength":1,
+        "maxLength":100
+    },
+    "descripcion":{
+        "type":"String",
+        "required": true,
+        "minLength":0,
+        "maxLength":400
+    },
+    "estado":{
+      "type": "String",
+      "required": true,
+      "enum": [
+        "activo",
+        "inactivo"
+      ]
+    },
+
+    "imagen":{
+      "required": true
+
+    },
+    "fecha":{
+        "type": "Date",
+        "default": "Date.now()"
+    },
+    "idUsuario":{
+        "type":"Schema.ObjectId",
+        "ref": "usuario"
+    }
+
+  },
+  "comentarios":{
+
+    "id_":{
+      "type":"Schema.ObjectId",
+      "required": true
+    },
+
+    "idUsuario":{
+      "type": "Schema.ObjectId",
+      "ref": "usuario"
+    },
+    "idPublicacion":{
+      "type":"Schema.ObjectId",
+      "ref": "publicacion"
+    },
+    "fecha":{
+      "type": "Date",
+      "default": "Date.now()"
+    },
+    "comentario":{
+      "type":"String",
+      "required": true,
+      "minLength": 1,
+      "maxLength":150
+    }
+  },
+    "likes":{
+
+      "id_":{
+        "type":"Schema.ObjectId",
+        "required": true
+      },
+      "idPublicacion":{
+        "type":"Schema.ObjectId",
+        "ref":"publicacion"
+      },
+      "idUsuario":{
+        "type":"Schema.ObjectId",
+        "ref":"usuario"
+      },
+      "fecha":{
+        "type":"Date",
+        "default":"Date.now()"
+      }
+    }
+}
