@@ -44,6 +44,10 @@ const usuarioSchema = new Schema({
     //    ref: 'publicacion'
     //},
 
-})
+},
+{
+    timestamps:true //fecha creacion y actualizacion
+}
+)
 
 module.exports = mongoose.model('usuario', usuarioSchema);
