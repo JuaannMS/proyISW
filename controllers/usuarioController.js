@@ -20,18 +20,18 @@ const createUsuario = (req,res) => {
 
 }
 
-const getUsuario = (req, res) => {
-    Usuario.find().populate({ path: 'Category' }).exec((error, usuario) => {
-        if (error) {
-            return res.status(400).send({ message: "No se pudo realizar la busqueda" })
+const getUsuario = (req,res) => {
+    Usuario.find({}, (error, usuarios) => {
+        if(error){
+            return res.status(400).send({message: "No se realizo la busqueda"})
         }
-        if (usuario.length === 0) {
-            return res.status(404).send({ message: "No se encontraron usuarios" })
+        if(usuarios.length == 0){
+            return res.status(404).send({message: "No se han encontrado publicaciones"})
         }
-        return res.status(200).send(usuario)
-    })
-}
-
+            return res.status(200).send(usuarios)
+        }
+        )
+    }
 const updateUsuario = (req,res) => {
     const { id } = req.params
     Usuario.findByIdAndUpdate(id, req.body, (error, usuario) => {
@@ -46,9 +46,22 @@ const updateUsuario = (req,res) => {
 
 }
 
-
+const deleteUsuario = (req, res) => {
+    const { id } = req.params
+    Usuario.findByIdAndDelete(id, req.body , (error, usuario) => {
+      if(error){
+        return res.status(400).send({ message: "No se pudo eliminar la publicacion"})
+      }
+      if(!Usuario){ // no existe "!"
+        return res.status(404).send({ message: "No se encontro la publicacion"})
+      }
+      return res.status(200).send({ message : "Se elimino correctamente la publicacion"})
+    }
+    )
+}
 module.exports = {
     createUsuario,
     getUsuario,
     updateUsuario,
+    deleteUsuario,
 }
