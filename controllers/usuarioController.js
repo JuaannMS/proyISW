@@ -47,9 +47,8 @@ const updateUsuario = (req,res) => {
 }
 
 
-
 module.exports = {
     createUsuario,
     getUsuario,
-    updateUsuario
+    updateUsuario,
 }
