@@ -21,7 +21,7 @@ const createUsuario = (req,res) => {
 }
 
 const getUsuario = (req,res) => {
-    Usuario.find({}, (error, usuarios) => {
+    Usuario.findById({}, (error, usuarios) => {
         if(error){
             return res.status(400).send({message: "No se realizo la busqueda"})
         }
