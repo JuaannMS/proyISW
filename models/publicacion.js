@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const publicacionSchema = new Schema({
-    id_:{
-        type:Schema.ObjectId,
-        required:false
-    },
 
     titulo:{
         type: String,
@@ -15,7 +11,7 @@ const publicacionSchema = new Schema({
     },
     etiqueta:{
         type: String,
-        required:false,
+        required:true,
         minLength:1,
         maxLength:100
     },

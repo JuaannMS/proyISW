@@ -2,10 +2,10 @@ const publicacion = require('../models/publicacion');
 const Publicacion = require('../models/publicacion');
 
 const createPublicacion = (req , res) => {
-const { titulo , etiqueta ,descripcion ,estado ,idUsuario} = req.body
+const { titulo ,descripcion ,idUsuario} = req.body
 const newPublicacion = new Publicacion({
 titulo,
-etiqueta,
+etiqueta:' ',
 descripcion,
 estado :'Activo',
 idUsuario

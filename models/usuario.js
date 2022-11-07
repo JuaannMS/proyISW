@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const usuarioSchema = new Schema({
-    id_:{
-        type: [Schema.ObjectId],
-        required: true
-    },
     rut:{
         type: String,
         required: true
