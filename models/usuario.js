@@ -34,10 +34,7 @@ const usuarioSchema = new Schema({
         minLength: 9,
         maxLength: 15
     },
-    idPublicacion:{
-    type: [Schema.ObjectId],
-    ref: 'publicacion'
-    },
+
 
 },
 {
