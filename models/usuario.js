@@ -33,12 +33,11 @@ const usuarioSchema = new Schema({
         required:true,
         minLength: 9,
         maxLength: 15
-    }
-    //,
-    //idPublicacion:{
-    //    type: [Schema.ObjectId],
-    //    ref: 'publicacion'
-    //},
+    },
+    idPublicacion:{
+    type: [Schema.ObjectId],
+    ref: 'publicacion'
+    },
 
 },
 {
