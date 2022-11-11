@@ -88,6 +88,10 @@
     "idUsuario":{
         "type":"Schema.ObjectId",
         "ref": "usuario"
+    },
+    "reportes":{
+        "type":"Number",
+        "default":0
     }
 
   },
