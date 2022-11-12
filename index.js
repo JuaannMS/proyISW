@@ -7,13 +7,14 @@ dotenv.config();
 
 const publicacionRoutes = require('./routes/publicacionRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
+const mailerController = require ('./routes/mailerRoutes');
 app.use(cors());
 app.use(express.json());
 app.options('*', cors());
 
 app.use('/api', publicacionRoutes);
 app.use('/api', usuarioRoutes);
-
+app.use('/api', mailerController);
 const options = {
     useNewUrlParser: true,
     autoIndex: true,
