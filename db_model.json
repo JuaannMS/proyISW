@@ -85,6 +85,11 @@
         "type": "Date",
         "default": "Date.now()"
     },
+    "cantLikes":{
+        "type": "Number",
+        "required": true,
+        "minLength": 0
+    },
     "idUsuario":{
         "type":"Schema.ObjectId",
         "ref": "usuario"
@@ -138,6 +143,21 @@
       "fecha":{
         "type":"Date",
         "default":"Date.now()"
+      }
+    },
+    "reporte":{
+
+      "id_":{
+        "type":"Schema.ObjectId",
+        "required":true
+      },
+      "idUsuario":{
+        "type":"Schema.ObjectId",
+        "ref": "usuario"
+      },
+      "idPublicacion":{
+        "type":"Schema.ObjectId",
+        "ref": "publicacion"
       }
     }
 }
