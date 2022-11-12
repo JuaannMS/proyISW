@@ -8,6 +8,7 @@ titulo,
 etiqueta:' ',
 descripcion,
 estado :'Activo',
+cantLikes: 0,
 idUsuario
 })
 newPublicacion.save((error, publicacion) => {

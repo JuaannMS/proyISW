@@ -85,6 +85,11 @@
         "type": "Date",
         "default": "Date.now()"
     },
+    "cantLikes":{
+        "type": "Number",
+        "required": true,
+        "minLength": 0
+    },
     "idUsuario":{
         "type":"Schema.ObjectId",
         "ref": "usuario"

@@ -27,13 +27,17 @@ const publicacionSchema = new Schema({
         enum: [
             'Activo',
             ]
+    },
+    cantLikes:{
+        type: Number,
+        required: true,
+        minLength:0
+    },
+    idUsuario:{
+    type:Schema.ObjectId,
+    required: true,
+    ref: 'usuario'
     }
-
-    //,
-    //idUsuario:[{
-    //type:Schema.Types.ObjectId,
-    //ref: 'usuario'
-    //}]
 },
 {
 timestamps:true //fecha creacion y actualizacion
