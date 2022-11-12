@@ -1,7 +1,7 @@
 const Usuario = require('../models/usuario');
 
 const createUsuario = (req,res) => {
-    const {rut,nombre, direccion, fechaCumpleanio, correo, telefono, idPublicacion} = req.body
+    const {rut,nombre, direccion, fechaCumpleanio, correo, telefono, } = req.body
     const newUsuario = new Usuario({
         rut,
         nombre,
@@ -9,7 +9,6 @@ const createUsuario = (req,res) => {
         fechaCumpleanio,
         correo,
         telefono,
-        idPublicacion
     })
     newUsuario.save((error, usuario) => {
     if(error){
@@ -20,10 +19,10 @@ const createUsuario = (req,res) => {
 
 }
 
-const getUsuario = (req,res) => {
-    Usuario.findById({}, (error, usuarios) => {
+const getUsuarios = (req,res) => {
+    Usuario.find({}, (error, usuarios) => {
         if(error){
-            return res.status(400).send({message: "No se realizo la busqueda"})
+            return res.status(400).send({message: "No se realizó la busqueda"})
         }
         if(usuarios.length == 0){
             return res.status(404).send({message: "No se han encontrado publicaciones"})
@@ -52,7 +51,7 @@ const deleteUsuario = (req, res) => {
       if(error){
         return res.status(400).send({ message: "No se pudo eliminar la publicacion"})
       }
-      if(!Usuario){ // no existe "!"
+      if(!usuario){ // no existe "!"
         return res.status(404).send({ message: "No se encontro la publicacion"})
       }
       return res.status(200).send({ message : "Se elimino correctamente la publicacion"})
@@ -61,7 +60,7 @@ const deleteUsuario = (req, res) => {
 }
 module.exports = {
     createUsuario,
-    getUsuario,
+    getUsuarios,
     updateUsuario,
     deleteUsuario,
 }
