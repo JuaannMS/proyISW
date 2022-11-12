@@ -3,7 +3,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const sendMail = (req, res) => {
-    const { message } = req.body;
     const token = process.env.PW;
     const user = process.env.USER;
     if (!token) {
@@ -24,7 +23,13 @@ const sendMail = (req, res) => {
         to: req.body.email,
         subject: req.body.subject,
         text: req.body.text,
-        html: `<h1>${message}</h1>`
+        html: `
+        <p>Querido usuario se le informa que usted ha sido baneado del sistema, los detalles los puede encontrar a acontinuación</p>
+        <p>Periodo ${req.body.periodoBaneo}</p>
+        <p>Motivo: ${req.body.motivoBaneo}</p>
+        <br>
+        <p>Publicación: </p>
+        <p>${req.body.publicacion}</p>`
     }
     transporter.sendMail(mailOptions, (err, info) => {
         if (err){
