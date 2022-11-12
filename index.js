@@ -29,7 +29,7 @@ mongoose.connect(process.env.DB ,options, (error) => {
     if (error) {
         console.log(error);
     } else {
-        console.log("Connectedo con la base de datos");
+        console.log("Conectado con la base de datos");
     }
 })
 
