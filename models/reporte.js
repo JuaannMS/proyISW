@@ -7,11 +7,11 @@ const reporteSchema = new Schema({
         require:false
     },
     idUsuario:[{
-        type:Schema.Types.ObjectId,
+        type:Schema.ObjectId,
         ref: 'usuario'
     }],
     idPublicacion:[{
-        type:Schema.Types.ObjectId,
+        type:Schema.ObjectId,
         ref: 'publicacion'
     }]
 })

@@ -33,6 +33,6 @@ mongoose.connect(process.env.DB ,options, (error) => {
     }
 })
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
     console.log('Conexion establecida');
 })
