@@ -1,8 +1,8 @@
 const publicacion = require('../models/publicacion');
 const Publicacion = require('../models/publicacion');
-const Usuario = require('../models/usuario');
 
 const createPublicacion = (req, res) => {
+  const Usuario = require('../models/usuario')
   const { titulo, descripcion, idUsuario } = req.body
   const newPublicacion = new Publicacion({
     titulo,
