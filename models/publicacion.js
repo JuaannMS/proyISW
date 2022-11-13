@@ -11,7 +11,7 @@ const publicacionSchema = new Schema({
     },
     etiqueta:{
         type: String,
-        required:false,
+        required:true,
         minLength:1,
         maxLength:100
     },
@@ -23,7 +23,7 @@ const publicacionSchema = new Schema({
     },
     estado:{
         type: String,
-        required: true,
+        required: false,
         enum: [
             'Activo',
             'Inactivo'

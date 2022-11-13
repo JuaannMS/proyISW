@@ -3,11 +3,12 @@ const Publicacion = require('../models/publicacion');
 
 const createPublicacion = (req, res) => {
   const Usuario = require('../models/usuario')
-  const { titulo, descripcion, idUsuario } = req.body
+  const { titulo, descripcion, idUsuario, etiqueta } = req.body
   const newPublicacion = new Publicacion({
     titulo,
     descripcion,
-    idUsuario
+    idUsuario,
+    etiqueta
   })
   newPublicacion.save((error, publicacion) => {
     if (error) {
