@@ -70,10 +70,24 @@ const deletePublicacion = (req, res) => {
   )
 
 }
-//git 
+
+const getPublicacion = (req, res) => {
+  const { id } = req.params
+  Publicacion.findById(id, (error, publicacion) => {
+      if (error) {
+          return res.status(400).send({ message: "No se ha podido cambiar la publicacion" })
+      }
+      if (!publicacion) {
+          return res.status(404).send({ message: "No se ha podido encontrar la publicacion" })
+      }
+      return res.status(200).send(publicacion)
+  })
+}
+//git
 module.exports = {
   createPublicacion,
   getPublicaciones,
   updatePublicacion,
-  deletePublicacion
+  deletePublicacion,
+  getPublicacion
 }
