@@ -15,12 +15,12 @@ const createPublicacion = (req, res) => {
     }
     Usuario.findByIdAndUpdate(idUsuario, { $push: { idPublicacion: publicacion.id } }, (error, usuario) => {
       if (error) {
-          return res.status(400).send({ message: "No se pudo crear la publicacion" })
+        return res.status(400).send({ message: "No se pudo crear la publicacion" })
       }
       if (!usuario) {
-          return res.status(404).send({ message: "No se encontro el usuario" })
+        return res.status(404).send({ message: "No se encontro el usuario" })
       }
-  })
+    })
 
     return res.status(201).send(publicacion)
   })
