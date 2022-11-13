@@ -30,8 +30,9 @@ const publicacionSchema = new Schema({
     },
     cantLikes:{
         type: Number,
-        required: true,
-        minLength:0
+        required: false,
+        minLength:0,
+        default:0
     },
     idUsuario:{
     type:Schema.ObjectId,

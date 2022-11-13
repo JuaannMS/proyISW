@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const usuarioSchema = new Schema({
-    rut:{
+    rut: {
         type: String,
         required: true
     },
@@ -12,38 +12,43 @@ const usuarioSchema = new Schema({
         minLength: 1,
         maxLength: 100
     },
-    direccion:{
+    direccion: {
         type: String,
         required: true,
         minLength: 1,
         maxLength: 100
     },
-    fechaCumpleanio:{
+    fechaCumpleanio: {
         type: Date,
-        required:true
+        required: true
     },
-    correo:{
-        type:String,
+    correo: {
+        type: String,
         required: true,
         minLength: 10,
-        maxLength:100
+        maxLength: 100
     },
-    telefono:{
-        type:Number,
-        required:true,
+    telefono: {
+        type: Number,
+        required: true,
         minLength: 9,
         maxLength: 15
+    },
+    idPublicacion: {
+        type: [Schema.ObjectId],
+        ref: 'publicacion',
+        default: []
+    },
+    idFavoritos: {
+        type: [Schema.ObjectId],
+        ref: 'publicacion',
+        default: []
     }
-    //,
-    //idPublicacion:{
-    //    type: [Schema.ObjectId],
-    //    ref: 'publicacion'
-    //},
 
 },
-{
-    timestamps:true //fecha creacion y actualizacion
-}
+    {
+        timestamps: true //fecha creacion y actualizacion
+    }
 )
 
 module.exports = mongoose.model('usuario', usuarioSchema);

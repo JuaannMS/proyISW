@@ -1,73 +1,78 @@
 {
-    "usuario":{
-
-      "id_":{
-        "type": "Schema.ObjectId",
-        "required": true
-      },
-      "rut":{
-        "type":"String",
-        "required":true
-      },
-      "nombre": {
-        "type": "String",
-        "required": true,
-        "minLength": 1,
-        "maxLength": 100
-      },
-      "direccion":{
-        "type": "String",
-        "required": true,
-        "minLength": 1,
-        "maxLength": 100
-      },
-      "fechaCumpleanio":{
-        "type": "Date",
-        "required":true
-      },
-      "correo":{
-        "type":"String",
-        "required": true,
-        "minLength": 10,
-        "maxLength":100
-      },
-      "telefono":{
-        "type":"Number",
-        "required":true,
-        "minLength": 9,
-        "maxLength": 15
-      },
-      "idPublicacion":{
-        "type": "Schema.ObjectId",
-        "ref": "publicacion"
-      }
-
+  "usuario": {
+    "id_": {
+      "type": "Schema.ObjectId",
+      "required": true
     },
-    "publicacion":{
-
-    "id_":{
-        "type":"Schema.ObjectId",
-        "required":true
-      },
-    "titulo":{
-        "type": "String",
-        "required":true,
-        "minLength":1,
-        "maxLength":100
+    "rut": {
+      "type": "String",
+      "required": true
     },
-    "etiqueta":{
-        "type":"String",
-        "required":true,
-        "minLength":1,
-        "maxLength":100
+    "nombre": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 100
     },
-    "descripcion":{
-        "type":"String",
-        "required": true,
-        "minLength":0,
-        "maxLength":400
+    "direccion": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 100
     },
-    "estado":{
+    "fechaCumpleanio": {
+      "type": "Date",
+      "required": true
+    },
+    "correo": {
+      "type": "String",
+      "required": true,
+      "minLength": 10,
+      "maxLength": 100
+    },
+    "telefono": {
+      "type": "Number",
+      "required": true,
+      "minLength": 9,
+      "maxLength": 15
+    },
+    "idPublicacion": {
+      "type": [
+        "Schema.ObjectId"
+      ],
+      "ref": "publicacion"
+    },
+    "favoritos": {
+      "type": [
+        "Schema.ObjectId"
+      ],
+      "ref": "publicacion"
+    }
+  },
+  "publicacion": {
+    "id_": {
+      "type": "Schema.ObjectId",
+      "required": true
+    },
+    "titulo": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "etiqueta": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "descripcion": {
+      "type": "String",
+      "required": true,
+      "minLength": 0,
+      "maxLength": 400
+    },
+    "estado": {
       "type": "String",
       "required": true,
       "enum": [
@@ -75,88 +80,81 @@
         "inactivo"
       ]
     },
-
-    "imagen":{
-      "required": true
-
-    },
-    "fecha":{
-        "type": "Date",
-        "default": "Date.now()"
-    },
-    "cantLikes":{
-        "type": "Number",
-        "required": true,
-        "minLength": 0
-    },
-    "idUsuario":{
-        "type":"Schema.ObjectId",
-        "ref": "usuario"
-    },
-    "reportes":{
-        "type":"Number",
-        "default":0
-    }
-
-  },
-  "comentarios":{
-
-    "id_":{
-      "type":"Schema.ObjectId",
+    "imagen": {
       "required": true
     },
-
-    "idUsuario":{
-      "type": "Schema.ObjectId",
-      "ref": "usuario"
-    },
-    "idPublicacion":{
-      "type":"Schema.ObjectId",
-      "ref": "publicacion"
-    },
-    "fecha":{
+    "fecha": {
       "type": "Date",
       "default": "Date.now()"
     },
-    "comentario":{
-      "type":"String",
+    "cantLikes": {
+      "type": "Number",
       "required": true,
-      "minLength": 1,
-      "maxLength":150
+      "minLength": 0
+    },
+    "idUsuario": {
+      "type": "Schema.ObjectId",
+      "ref": "usuario"
+    },
+    "reportes": {
+      "type": "Number",
+      "default": 0
     }
   },
-    "likes":{
-
-      "id_":{
-        "type":"Schema.ObjectId",
-        "required": true
-      },
-      "idPublicacion":{
-        "type":"Schema.ObjectId",
-        "ref":"publicacion"
-      },
-      "idUsuario":{
-        "type":"Schema.ObjectId",
-        "ref":"usuario"
-      },
-      "fecha":{
-        "type":"Date",
-        "default":"Date.now()"
-      }
+  "comentarios": {
+    "id_": {
+      "type": "Schema.ObjectId",
+      "required": true
     },
-    "reporte":{
-
-      "id_":{
-        "type":"Schema.ObjectId",
-        "required":true
-      },
-      "idUsuario":{
-        "type":"Schema.ObjectId",
-        "ref": "usuario"
-      },
-      "idPublicacion":{
-        "type":"Schema.ObjectId",
-        "ref": "publicacion"
-      }
+    "idUsuario": {
+      "type": "Schema.ObjectId",
+      "ref": "usuario"
+    },
+    "idPublicacion": {
+      "type": "Schema.ObjectId",
+      "ref": "publicacion"
+    },
+    "fecha": {
+      "type": "Date",
+      "default": "Date.now()"
+    },
+    "comentario": {
+      "type": "String",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 150
     }
+  },
+  "likes": {
+    "id_": {
+      "type": "Schema.ObjectId",
+      "required": true
+    },
+    "idPublicacion": {
+      "type": "Schema.ObjectId",
+      "ref": "publicacion"
+    },
+    "idUsuario": {
+      "type": "Schema.ObjectId",
+      "ref": "usuario"
+    },
+    "fecha": {
+      "type": "Date",
+      "default": "Date.now()"
+    }
+  },
+  "reporte": {
+    "id_": {
+      "type": "Schema.ObjectId",
+      "required": true
+    },
+    "idUsuario": {
+      "type": "Schema.ObjectId",
+      "ref": "usuario"
+    },
+    "idPublicacion": {
+      "type": "Schema.ObjectId",
+      "ref": "publicacion"
+    }
+  }
 }
