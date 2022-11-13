@@ -6,10 +6,7 @@ const createPublicacion = (req, res) => {
   const { titulo, descripcion, idUsuario } = req.body
   const newPublicacion = new Publicacion({
     titulo,
-    etiqueta: ' ',
     descripcion,
-    estado: 'Activo',
-    cantLikes: 0,
     idUsuario
   })
   newPublicacion.save((error, publicacion) => {
