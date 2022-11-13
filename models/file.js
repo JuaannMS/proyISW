@@ -3,20 +3,20 @@ const Schema = mongoose.Schema;
 const fileSchema = new Schema({
     url:{
         type: String,
-        required: true,
+        required: true
     },
     name:{
         type: String,
-        required: true,
+        required: true
     },
     mimeType:{
         type: String,
-        required: true,
+        required: true
     },
     idPublicacion:{
         type:Schema.ObjectId,
         ref: 'publicacion',
-        required: true,
+        required: true
     }
 });
 
