@@ -89,8 +89,9 @@
     },
     "cantLikes": {
       "type": "Number",
-      "required": true,
-      "minLength": 0
+      "required": false,
+      "minLength": 0,
+      "default":0
     },
     "idUsuario": {
       "type": "Schema.ObjectId",
@@ -155,6 +156,25 @@
     "idPublicacion": {
       "type": "Schema.ObjectId",
       "ref": "publicacion"
+    }
+  },
+  "file": {
+    "url": {
+      "type": "String",
+      "required": true
+    },
+    "name": {
+      "type": "String",
+      "required": true
+    },
+    "mimeType": {
+      "type": "String",
+      "required": true
+    },
+    "idPublicacion": {
+      "type": "Schema.ObjectId",
+      "ref": "publicacion",
+      "required": true
     }
   }
 }
