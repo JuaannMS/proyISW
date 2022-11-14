@@ -9,6 +9,7 @@ etiqueta,
 descripcion,
 estado :'Activo',
 idUsuario
+
 })
 newPublicacion.save((error, publicacion) => {
     if(error) {

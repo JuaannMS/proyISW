@@ -1,6 +1,20 @@
 const Usuario = require('../models/usuario');
+const express = require('express');
+import ChileanRutify from 'chilean-rutify';
+const app = express();
+app.use(express.json());
+
+app.post((req, res) => {
+    const {rut,nombre, direccion, fechaCumpleanio, correo, telefono, } = req.body
+    User.create({
+    rut: req.body.rut,
+    correo: req.body.correo,
+    }).then(user => res.json(user));
+});
 
 const createUsuario = (req,res) => {
+    let errores = [""]
+    var x = JSON.stringify(errores)
     const {rut,nombre, direccion, fechaCumpleanio, correo, telefono, } = req.body
     const newUsuario = new Usuario({
         rut,
@@ -10,12 +24,35 @@ const createUsuario = (req,res) => {
         correo,
         telefono,
     })
-    newUsuario.save((error, usuario) => {
-    if(error){
-        return res.status(400).send({ message : "No se ha podido crear el usuario"})
+
+    const validarCorreo = (correo)=>{
+        let expReg = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+        let verificar = expReg.test(correo)
+        if(!verificar){
+            errores.push("El correo no es valido")
+        }
     }
-    return res.status(201).send(usuario)
-    })
+
+    validarCorreo(correo)
+
+    const validarRut= (rut)=>{
+        if(!(ChileanRutify.validRut(rut) && ChileanRutify.validRutVerifier(rut))){
+            errores.push("El rut no es valido")
+        }
+
+    }
+
+    if(!errores){
+        newUsuario.save((x, usuario) => {
+            if(!x){
+                return res.status(400).send({x})
+            }
+            return res.status(201).send(usuario)
+            })
+    }else{
+        return console.log(JSON.stringify({errores}));
+    }
+
 
 }
 
