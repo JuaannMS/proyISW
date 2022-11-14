@@ -13,7 +13,8 @@ const publicacionSchema = new Schema({
         type: String,
         required:true,
         minLength:1,
-        maxLength:100
+        maxLength:100,
+        default:0
     },
     descripcion:{
         type: String,
