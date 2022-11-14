@@ -8,7 +8,7 @@ const createPublicacion = (req, res) => {
     titulo,
     descripcion,
     idUsuario,
-    
+
   })
   newPublicacion.save((error, publicacion) => {
     if (error) {

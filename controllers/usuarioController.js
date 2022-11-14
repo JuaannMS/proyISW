@@ -1,37 +1,105 @@
 const Usuario = require('../models/usuario');
+const express = require('express');
+//const ChileanRutify = require ('chilean-rutify');
+//import usuario from '../models/usuario';
+const { validate, clean, format, getCheckDigit } = require('rut.js');
+const app = express();
+app.use(express.json());
 
-const createUsuario = (req, res) => {
-    const { rut, nombre, direccion, fechaCumpleanio, correo, telefono, } = req.body
+app.post((req, res) => {
+    const {rut,nombre, direccion, fechaCumpleanio, correo, telefono, } = req.body
+    User.create({
+    rut: req.body.rut,
+    correo: req.body.correo,
+    }).then(user => res.json(user));
+});
+
+const createUsuario = (req,res) => {
+    let errores = []
+    var x = JSON.stringify(errores)
+    const {rut,nombre, direccion, fechaCumpleanio, correo, telefono, } = req.body
     const newUsuario = new Usuario({
         rut,
         nombre,
         direccion,
         fechaCumpleanio,
         correo,
-        telefono,
-    })
-    newUsuario.save((error, usuario) => {
-        if (error) {
-            return res.status(400).send({ message: "No se ha podido crear el usuario" })
-        }
-        return res.status(201).send(usuario)
+        telefono
     })
 
-}
-
-const getUsuarios = (req, res) => {
-    Usuario.find({}, (error, usuarios) => {
-        if (error) {
-            return res.status(400).send({ message: "No se realizó la busqueda" })
+    const validarCorreo = (correo)=>{
+        let expReg = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+        let verificar = expReg.test(correo)
+        if(!verificar){
+            errores.push("El correo no es valido")
         }
-        if (usuarios.length == 0) {
-            return res.status(404).send({ message: "No se han encontrado publicaciones" })
-        }
-        return res.status(200).send(usuarios)
     }
-    )
+
+    validarCorreo(correo)
+
+    /*const validarRut= (rut)=>{
+        if(!(ChileanRutify.validRut(rut) && ChileanRutify.validRutVerifier(rut))){
+            errores.push("El rut no es valido")
+        }
+    }
+    validarRut(rut)
+*/
+    const validarRutt=(rut)=>{
+        if(!validate(rut)){
+            errores.push("El rut no es valido")
+        }
+    }
+    validarRutt(rut)
+
+
+    const validarNombre = (nombre)=>{
+        var regex = /^[a-zA-ZÀ-ÿ ]+$/;
+        if(!regex.test(nombre)){
+        errores.push("Nombre ingresado NO valido")
+        }
+        if(nombre.length>100 || nombre.length<1){
+        errores.push("Cantidad de caracteres no valida")
+        }
+
+    }
+    validarNombre(nombre)
+
+    validarDireccion= (direccion)=>{
+        if(direccion.length>100 || direccion.length<1){
+            errores.push("Cantidad de caracteres no valida")
+        }
+    }
+    validarDireccion(direccion)
+
+    if(errores.length==0){
+        
+        newUsuario.save((x, usuario) => {
+            if(x){
+                return res.status(400).send({x})
+            }
+            return res.status(201).send(usuario)
+            })
+    }else{
+        
+        return res.status(400).send(JSON.stringify({errores}));
+    }
+
+
 }
-const updateUsuario = (req, res) => {
+
+const getUsuarios = (req,res) => {
+    Usuario.find({}, (error, usuarios) => {
+        if(error){
+            return res.status(400).send({message: "No se realizó la busqueda"})
+        }
+        if(usuarios.length == 0){
+            return res.status(404).send({message: "No se han encontrado publicaciones"})
+        }
+            return res.status(200).send(usuarios)
+        }
+        )
+    }
+const updateUsuario = (req,res) => {
     const { id } = req.params
     Usuario.findByIdAndUpdate(id, req.body, (error, usuario) => {
         if (error) {
@@ -47,37 +115,20 @@ const updateUsuario = (req, res) => {
 
 const deleteUsuario = (req, res) => {
     const { id } = req.params
-    Usuario.findByIdAndDelete(id, req.body, (error, usuario) => {
-        if (error) {
-            return res.status(400).send({ message: "No se pudo eliminar la publicacion" })
-        }
-        if (!usuario) { // no existe "!"
-            return res.status(404).send({ message: "No se encontro la publicacion" })
-        }
-        return res.status(200).send({ message: "Se elimino correctamente la publicacion" })
+    Usuario.findByIdAndDelete(id, req.body , (error, usuario) => {
+    if(error){
+        return res.status(400).send({ message: "No se pudo eliminar la publicacion"})
+    }
+    if(!usuario){
+        return res.status(404).send({ message: "No se encontro la publicacion"})
+    }
+    return res.status(200).send({ message : "Se elimino correctamente la publicacion"})
     }
     )
 }
-
-const newFavorito = (req, res) => {
-    const { id } = req.params
-    const { idPublicacion } = req.body
-    Usuario.findByIdAndUpdate(id, { $push: { idFavoritos: idPublicacion } }, (error, usuario) => {
-        if (error) {
-            return res.status(400).send({ message: "No se pudo agregar el favorito" })
-        }
-
-        if (!usuario) {
-            return res.status(404).send({ message: "No se encontro el usuario" })
-        }
-        return res.status(200).send({ message: "Favorito agregado" })
-    })
-}
-
 module.exports = {
     createUsuario,
     getUsuarios,
     updateUsuario,
     deleteUsuario,
-    newFavorito
 }
