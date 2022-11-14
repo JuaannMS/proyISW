@@ -4,13 +4,6 @@ const { validate, clean, format, getCheckDigit } = require('rut.js');
 const app = express();
 app.use(express.json());
 
-app.post((req, res) => {
-    const {rut,nombre, direccion, fechaCumpleanio, correo, telefono, } = req.body
-    User.create({
-    rut: req.body.rut,
-    correo: req.body.correo,
-    }).then(user => res.json(user));
-});
 
 const createUsuario = (req,res) => {
     let errores = []
