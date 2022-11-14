@@ -1,7 +1,5 @@
 const Usuario = require('../models/usuario');
 const express = require('express');
-//const ChileanRutify = require ('chilean-rutify');
-//import usuario from '../models/usuario';
 const { validate, clean, format, getCheckDigit } = require('rut.js');
 const app = express();
 app.use(express.json());
