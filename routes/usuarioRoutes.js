@@ -1,4 +1,5 @@
 const express = require('express');
+const { validate, clean, format, getCheckDigit } = require('rut.js')
 const usuarioController = require('../controllers/usuarioController');
 const api = express.Router();
 

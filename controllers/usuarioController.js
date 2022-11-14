@@ -1,6 +1,8 @@
 const Usuario = require('../models/usuario');
 const express = require('express');
-import ChileanRutify from 'chilean-rutify';
+//const ChileanRutify = require ('chilean-rutify');
+//import usuario from '../models/usuario';
+const { validate, clean, format, getCheckDigit } = require('rut.js');
 const app = express();
 app.use(express.json());
 
@@ -13,7 +15,7 @@ app.post((req, res) => {
 });
 
 const createUsuario = (req,res) => {
-    let errores = [""]
+    let errores = []
     var x = JSON.stringify(errores)
     const {rut,nombre, direccion, fechaCumpleanio, correo, telefono, } = req.body
     const newUsuario = new Usuario({
@@ -22,7 +24,7 @@ const createUsuario = (req,res) => {
         direccion,
         fechaCumpleanio,
         correo,
-        telefono,
+        telefono
     })
 
     const validarCorreo = (correo)=>{
@@ -35,22 +37,51 @@ const createUsuario = (req,res) => {
 
     validarCorreo(correo)
 
-    const validarRut= (rut)=>{
+    /*const validarRut= (rut)=>{
         if(!(ChileanRutify.validRut(rut) && ChileanRutify.validRutVerifier(rut))){
             errores.push("El rut no es valido")
         }
+    }
+    validarRut(rut)
+*/
+    const validarRutt=(rut)=>{
+        if(!validate(rut)){
+            errores.push("El rut no es valido")
+        }
+    }
+    validarRutt(rut)
+
+
+    const validarNombre = (nombre)=>{
+        var regex = /^[a-zA-ZÀ-ÿ ]+$/;
+        if(!regex.test(nombre)){
+        errores.push("Nombre ingresado NO valido")
+        }
+        if(nombre.length>100 || nombre.length<1){
+        errores.push("Cantidad de caracteres no valida")
+        }
 
     }
+    validarNombre(nombre)
 
-    if(!errores){
+    validarDireccion= (direccion)=>{
+        if(direccion.length>100 || direccion.length<1){
+            errores.push("Cantidad de caracteres no valida")
+        }
+    }
+    validarDireccion(direccion)
+
+    if(errores.length==0){
+        
         newUsuario.save((x, usuario) => {
-            if(!x){
+            if(x){
                 return res.status(400).send({x})
             }
             return res.status(201).send(usuario)
             })
     }else{
-        return console.log(JSON.stringify({errores}));
+        
+        return res.status(400).send(JSON.stringify({errores}));
     }
 
 
@@ -85,13 +116,13 @@ const updateUsuario = (req,res) => {
 const deleteUsuario = (req, res) => {
     const { id } = req.params
     Usuario.findByIdAndDelete(id, req.body , (error, usuario) => {
-      if(error){
+    if(error){
         return res.status(400).send({ message: "No se pudo eliminar la publicacion"})
-      }
-      if(!usuario){ // no existe "!"
+    }
+    if(!usuario){
         return res.status(404).send({ message: "No se encontro la publicacion"})
-      }
-      return res.status(200).send({ message : "Se elimino correctamente la publicacion"})
+    }
+    return res.status(200).send({ message : "Se elimino correctamente la publicacion"})
     }
     )
 }
