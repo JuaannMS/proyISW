@@ -1,5 +1,5 @@
 const express = require('express');
-const ReporteController = require('../controllers/ReporteController');
+const ReporteController = require('../controllers/reporteController');
 const api = express.Router();
 
 api.post('/reporte', ReporteController.createReporte);
