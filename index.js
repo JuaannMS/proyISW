@@ -9,6 +9,7 @@ const publicacionRoutes = require('./routes/publicacionRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const mailerController = require ('./routes/mailerRoutes');
 const fileRoutes = require('./routes/fileRoutes');
+const reporteRoutes = require('./routes/reporteRoutes');
 
 app.use(cors());
 app.use(express.json());
@@ -17,6 +18,7 @@ app.use('/api', publicacionRoutes);
 app.use('/api', usuarioRoutes);
 app.use('/api', mailerController);
 app.use('/api', fileRoutes);
+app.use('/api', reporteRoutes);
 
 const options = {
     useNewUrlParser: true,

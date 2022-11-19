@@ -151,11 +151,13 @@
     },
     "idUsuario": {
       "type": "Schema.ObjectId",
-      "ref": "usuario"
+      "ref": "usuario",
+      "required": true
     },
     "idPublicacion": {
       "type": "Schema.ObjectId",
-      "ref": "publicacion"
+      "ref": "publicacion",
+      "required": true
     }
   },
   "file": {

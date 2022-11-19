@@ -1,3 +1,4 @@
+//modelo de publicacion.js
 const publicacion = require('../models/publicacion');
 const Publicacion = require('../models/publicacion');
 

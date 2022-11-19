@@ -1,10 +1,9 @@
-const Reporte = require('../models/reporte');
+const reporte = require('../models/reporte');
 
-const createReporte = (req,res) => {
-    const {idUsuario, idPublicacion, } = req.body
-    const newReporte = new Reporte({
-        idUsuario,
-        idPublicacion,
+const createReporte = (req, res) => {
+    const newReporte = new reporte({
+        idUsuario: req.body.idUsuario,
+        idPublicacion: req.body.idPublicacion
     })
     newReporte.save((error, reporte) =>{
     if(error){
@@ -16,12 +15,12 @@ const createReporte = (req,res) => {
     })
 }
 
-const getReportes = (req,res) => {
-    Reportes.find({}, (error, reporte) => {
+const getReportes = (req, res) => {
+    reporte.find({}, (error, reportes) => {
         if(error){
             return res.status(400).send({message: "No se realizó la busqueda"})
         }
-        if(usuarios.length == 0){
+        if(reportes.length == 0){
             return res.status(404).send({message: "No se han encontrado reportes"})
         }
             return res.status(200).send(reportes)
@@ -30,7 +29,7 @@ const getReportes = (req,res) => {
     }
 const updateReporte = (req,res) => {
     const { id } = req.params
-    Usuario.findByIdAndUpdate(id, req.body, (error, reporte) => {
+    reporte.findByIdAndUpdate(id, req.body, (error, reporte) => {
         if (error) {
             return res.status(400).send({ message: "No se pudo actualizar el reporte" })
         }
@@ -44,7 +43,7 @@ const updateReporte = (req,res) => {
 
 const deleteReporte = (req, res) => {
     const { id } = req.params
-    Reporte.findByIdAndDelete(id, req.body , (error, reporte) => {
+    reporte.findByIdAndDelete(id, req.body , (error, reporte) => {
       if(error){
         return res.status(400).send({ message: "No se pudo eliminar el reporte"})
       }
@@ -60,5 +59,5 @@ module.exports = {
     createReporte,
     getReportes,
     updateReporte,
-    deleteReporte,
+    deleteReporte
 }
