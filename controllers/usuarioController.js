@@ -118,69 +118,9 @@ const deleteUsuario = (req, res) => {
     )
 }
 
-const newFavorito = (req, res) => {
-    const { id } = req.params
-    const { idPublicacion } = req.body
-    Usuario.findById(id, (error, usuario) => {
-        if (error) {
-            return res.status(400).send({ message: "No se pudo agregar el favorito" })
-        }
-        if (!usuario) {
-            return res.status(404).send({ message: "No se encontro el usuario" })
-        }
-        if (usuario.idFavoritos.includes(idPublicacion)) {
-            return res.status(400).send({ message: "Ya se encuentra en favoritos" })
-        }
-
-
-        Usuario.findByIdAndUpdate(id, { $push: { idFavoritos: idPublicacion } }, (error, usuario) => {
-            if (error) {
-                return res.status(400).send({ message: "No se pudo agregar el favorito" })
-            }
-            if (!usuario) {
-                return res.status(404).send({ message: "No se encontro el usuario" })
-            }
-            return res.status(200).send({ message: "Favorito agregado" })
-        })
-    })
-}
-
-const deleteFavorito = (req, res) => {
-    const { id } = req.params
-    const { idPublicacion } = req.body
-    Usuario.findByIdAndUpdate(id, { $pull: { idFavoritos: idPublicacion } }, (error, usuario) => {
-        if (error) {
-            return res.status(400).send({ message: "No se pudo eliminar el favorito" })
-        }
-        if (!usuario) {
-            return res.status(404).send({ message: "No se encontro el usuario" })
-        }
-        if(!usuario.idFavoritos.includes(idPublicacion)){
-            return res.status(400).send({message:"No se encontro el favorito"})
-        }
-        return res.status(200).send({ message: "Favorito eliminado" })
-    })
-}
-
-const getFavoritos = (req, res) => {
-    const { id } = req.params
-    Usuario.findById(id, (error, usuario) => {
-        if (error) {
-            return res.status(400).send({ message: "No se pudo obtener los favoritos" })
-        }
-        if (!usuario) {
-            return res.status(404).send({ message: "No se encontro el usuario" })
-        }
-        return res.status(200).send(usuario.idFavoritos)
-    })
-}
-
 module.exports = {
     createUsuario,
     getUsuarios,
     updateUsuario,
-    deleteUsuario,
-    newFavorito,
-    deleteFavorito,
-    getFavoritos
+    deleteUsuario
 }

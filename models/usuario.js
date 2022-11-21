@@ -38,11 +38,6 @@ const usuarioSchema = new Schema({
         type: [Schema.ObjectId],
         ref: 'publicacion',
         default: []
-    },
-    idFavoritos: {
-        type: [Schema.ObjectId],
-        ref: 'publicacion',
-        default: []
     }
 
 },
