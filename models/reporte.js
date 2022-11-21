@@ -3,11 +3,6 @@ const Schema = mongoose.Schema;
 
 const reporteSchema = new Schema({
 
-    idUsuario:{
-        type:Schema.ObjectId,
-        ref: 'usuario',
-        required: true
-    },
     idPublicacion:{
         type:Schema.ObjectId,
         ref: 'publicacion',

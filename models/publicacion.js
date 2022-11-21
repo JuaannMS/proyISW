@@ -41,6 +41,11 @@ const publicacionSchema = new Schema({
     type:Schema.ObjectId,
     required: true,
     ref: 'usuario'
+    },
+    idReportes:{
+        type: [Schema.ObjectId],
+        ref: 'reporte',
+        default: []
     }
 },
 {

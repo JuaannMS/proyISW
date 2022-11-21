@@ -4,8 +4,7 @@ const api = express.Router();
 
 api.post('/reporte', ReporteController.createReporte);
 api.get('/reportes', ReporteController.getReportes);
-api.put('/reporte/update/:id', ReporteController.updateReporte);
-api.delete('/reporte/delete/:id', ReporteController.deleteReporte);
+api.delete('/reporte/delete/', ReporteController.deleteReportes);
 
 
 module.exports = api

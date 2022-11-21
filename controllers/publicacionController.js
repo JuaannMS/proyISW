@@ -1,4 +1,3 @@
-//modelo de publicacion.js
 const Publicacion = require('../models/publicacion');
 
 const createPublicacion = (req, res) => {

@@ -97,9 +97,11 @@
       "type": "Schema.ObjectId",
       "ref": "usuario"
     },
-    "reportes": {
-      "type": "Number",
-      "default": 0
+    "cantReportes": {
+      "type": [
+        "Schema.ObjectId"
+      ],
+      "ref": "reporte"
     }
   },
   "comentarios": {
@@ -147,11 +149,6 @@
   "reporte": {
     "id_": {
       "type": "Schema.ObjectId",
-      "required": true
-    },
-    "idUsuario": {
-      "type": "Schema.ObjectId",
-      "ref": "usuario",
       "required": true
     },
     "idPublicacion": {
