@@ -28,13 +28,7 @@ const createUsuario = (req,res) => {
 
     validarCorreo(correo)
 
-    /*const validarRut= (rut)=>{
-        if(!(ChileanRutify.validRut(rut) && ChileanRutify.validRutVerifier(rut))){
-            errores.push("El rut no es valido")
-        }
-    }
-    validarRut(rut)
-*/
+
     const validarRutt=(rut)=>{
         if(!validate(rut)){
             errores.push("El rut no es valido")
@@ -63,7 +57,7 @@ const createUsuario = (req,res) => {
     validarDireccion(direccion)
 
     if(errores.length==0){
-        
+
         newUsuario.save((x, usuario) => {
             if(x){
                 return res.status(400).send({x})
@@ -71,7 +65,7 @@ const createUsuario = (req,res) => {
             return res.status(201).send(usuario)
             })
     }else{
-        
+
         return res.status(400).send(JSON.stringify({errores}));
     }
 

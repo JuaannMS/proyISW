@@ -1,3 +1,4 @@
+const publicacion = require('../models/publicacion');
 const Publicacion = require('../models/publicacion');
 
 const createPublicacion = (req, res) => {
@@ -7,6 +8,8 @@ const createPublicacion = (req, res) => {
     titulo,
     descripcion,
     idUsuario,
+    cantLikes:0,
+    estado: true
 
   })
   newPublicacion.save((error, publicacion) => {
@@ -27,18 +30,26 @@ const createPublicacion = (req, res) => {
 
 }
 
-const getPublicaciones = (req, res) => {
-  Publicacion.find({}, (error, publicaciones) => {
+const getPublicaciones = (req, res) => { //mostrar solamente los activos
+
+Publicacion.find({
+  estado:true //comentar para que aparezcan todos
+}
+).sort({cantLikes : -1}).exec(
+function(error, publicaciones) {
     if (error) {
       return res.status(400).send({ message: "No se realizo la busqueda" })
     }
     if (publicaciones.length == 0) {
       return res.status(404).send({ message: "No se han encontrado publicaciones" })
     }
-    return res.status(200).send(publicaciones)
+    return res.status(200).send(publicaciones);
   }
+
   )
 }
+
+
 
 const updatePublicacion = (req, res) => {
   const { id } = req.params // {} sirve para definir mas variables al mismo tiempo
@@ -55,9 +66,10 @@ const updatePublicacion = (req, res) => {
 
 }
 
-const deletePublicacion = (req, res) => {
+const deletePublicacion = (req, res) => { //cambiar estado de estadopublicacion
   const { id } = req.params
-  Publicacion.findByIdAndDelete(id, req.body, (error, publicacion) => {
+  Publicacion.findByIdAndUpdate(id,{ $set: { estado: false }}
+    , (error, publicacion) => {
     if (error) {
       return res.status(400).send({ message: "No se pudo eliminar la publicacion" })
     }
@@ -82,11 +94,26 @@ const getPublicacion = (req, res) => {
       return res.status(200).send(publicacion)
   })
 }
+
+
+
+function setLikes(idPubli) {
+const {id}= idPubli
+Publicacion.findById (id, { $set: { cantLikes: cantLikes+1 }},  (error,publicacion) =>{
+  return res.status(200).send({ message: "Se dio like correctamente a la publicacion" })
+})
+
+
+}
+
+
+
 //git
 module.exports = {
   createPublicacion,
   getPublicaciones,
   updatePublicacion,
   deletePublicacion,
-  getPublicacion
+  getPublicacion,
+  setLikes
 }

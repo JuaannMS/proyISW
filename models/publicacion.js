@@ -23,13 +23,9 @@ const publicacionSchema = new Schema({
         maxLength:400
     },
     estado:{
-        type: String,
+        type: Boolean,
         required: false,
-        enum: [
-            'Activo',
-            'Inactivo'
-            ],
-        default: 'Activo'
+        default: true
     },
     cantLikes:{
         type: Number,

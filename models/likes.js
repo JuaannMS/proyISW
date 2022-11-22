@@ -3,14 +3,14 @@ const Schema = mongoose.Schema;
 
 const likesSchema = new Schema({
 
-    idUsuario:[{
-        type:Schema.Types.ObjectId,
+    idUsuario:{
+        type:Schema.ObjectId,
         ref: 'usuario'
-    }],
-    idPublicacion:[{
-        type:Schema.Types.ObjectId,
+    },
+    idPublicacion:{
+        type:Schema.ObjectId,
         ref: 'publicacion'
-    }],
+    },
 
 })
 
