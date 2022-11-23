@@ -3,7 +3,7 @@ const likesController = require('../controllers/likesController');
 const api = express.Router();
 
 api.post('/like', likesController.createLikes);
-api.get('/likes', likesController.getLikes);
+api.get('/likess', likesController.getLikes);
 
 
 module.exports = api

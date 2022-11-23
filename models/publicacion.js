@@ -11,10 +11,10 @@ const publicacionSchema = new Schema({
     },
     etiqueta:{
         type: String,
-        required:true,
-        minLength:1,
+        required:false,
+        minLength:0,
         maxLength:100,
-        default:0
+        default:" "
     },
     descripcion:{
         type: String,
@@ -24,12 +24,12 @@ const publicacionSchema = new Schema({
     },
     estado:{
         type: Boolean,
-        required: false,
+        required: true,
         default: true
     },
     cantLikes:{
         type: Number,
-        required: false,
+        required: true,
         minLength:0,
         default:0
     },

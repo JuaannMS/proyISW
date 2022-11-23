@@ -7,5 +7,7 @@ api.get('/publicaciones', publicacionController.getPublicaciones); //plural para
 api.put('/publicacion/update/:id', publicacionController.updatePublicacion );
 api.delete('/publicacion/delete/:id' , publicacionController.deletePublicacion);
 api.get('/publicacion/:id' , publicacionController.getPublicacion);
+api.get('/publicacionesx' , publicacionController.getPublicacionesporEtiqueta);
+
 
 module.exports = api

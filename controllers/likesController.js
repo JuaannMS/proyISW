@@ -7,26 +7,39 @@ const newLikes = new Likes({
 idUsuario,
 idPublicacion
 })
-newLikes.save((error, likes) => {
+
+if(null == Likes.find({
+    idPublicacion : idPublicacion,
+    idUsuario : idUsuario
+    }))
+
+{
+
+    console.log("entro aca")
+newLikes.save((error, Likes) => {
     if(error) {
         return res.status(400).send({ message: "No se pudo dar like" +error })
     }
-    return res.status(201).send(likes)
+    return res.status(201).send(Likes)
 })
-
 publicacion.setLikes(idPublicacion);
+
+}
+return res.status(400).send({ message: "Like repetido"})
+
+
 
 }
 
 const getLikes = (req,res) => {
-    Likes.find({}, (error, like) => {
+    Likes.find({}, (error, likess) => {
         if(error){
             return res.status(400).send({message: "No se realizó la busqueda"})
         }
-        if(like.length == 0){
+        if(likess.length == 0){
             return res.status(404).send({message: "No se han encontrado publicaciones"})
         }
-            return res.status(200).send(like)
+            return res.status(200).send(likess)
         }
         )
     }

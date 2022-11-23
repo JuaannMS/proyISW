@@ -78,12 +78,13 @@ const getUsuarios = (req,res) => {
             return res.status(400).send({message: "No se realizó la busqueda"})
         }
         if(usuarios.length == 0){
-            return res.status(404).send({message: "No se han encontrado publicaciones"})
+            return res.status(404).send({message: "No se han encontrado el usuario"})
         }
             return res.status(200).send(usuarios)
         }
         )
     }
+    
 const updateUsuario = (req,res) => {
     const { id } = req.params
     Usuario.findByIdAndUpdate(id, req.body, (error, usuario) => {
