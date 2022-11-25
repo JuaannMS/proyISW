@@ -5,6 +5,8 @@ const dotenv = require('dotenv');
 const app = express();
 dotenv.config();
 
+
+
 const publicacionRoutes = require('./routes/publicacionRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const mailerController = require ('./routes/mailerRoutes');
@@ -48,3 +50,6 @@ mongoose.connect(process.env.DB ,options, (error) => {
 app.listen(process.env.PORT, () => {
     console.log('Conexion establecida');
 })
+
+
+

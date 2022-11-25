@@ -33,6 +33,14 @@ const publicacionSchema = new Schema({
         minLength:0,
         default:0
     },
+    diasVisible:{
+        type:Number,
+        required: true
+    },
+    fechaExp:{
+        type:Date,
+        require:false
+    },
     idUsuario:{
     type:Schema.ObjectId,
     required: true,

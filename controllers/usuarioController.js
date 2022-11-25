@@ -8,14 +8,15 @@ app.use(express.json());
 const createUsuario = (req,res) => {
     let errores = []
     var x = JSON.stringify(errores)
-    const {rut,nombre, direccion, fechaCumpleanio, correo, telefono, } = req.body
+    const {rut,nombre, direccion, fechaCumpleanio, correo, telefono,admi } = req.body
     const newUsuario = new Usuario({
         rut,
         nombre,
         direccion,
         fechaCumpleanio,
         correo,
-        telefono
+        telefono,
+        admi
     })
 
     const validarCorreo = (correo)=>{
@@ -69,7 +70,6 @@ const createUsuario = (req,res) => {
         return res.status(400).send(JSON.stringify({errores}));
     }
 
-
 }
 
 const getUsuarios = (req,res) => {
@@ -84,7 +84,7 @@ const getUsuarios = (req,res) => {
         }
         )
     }
-    
+
 const updateUsuario = (req,res) => {
     const { id } = req.params
     Usuario.findByIdAndUpdate(id, req.body, (error, usuario) => {
@@ -113,9 +113,21 @@ const deleteUsuario = (req, res) => {
     )
 }
 
+function validarRol(rutt){
+
+    console.log(
+        Usuario.find({
+            rut: rutt
+        })
+    )
+
+}
+
 module.exports = {
     createUsuario,
     getUsuarios,
     updateUsuario,
-    deleteUsuario
+    deleteUsuario,
+    validarRol
+
 }

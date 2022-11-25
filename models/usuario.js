@@ -34,6 +34,10 @@ const usuarioSchema = new Schema({
         minLength: 9,
         maxLength: 15
     },
+    admi:{
+        type: Boolean,
+        require: true
+    },
     idPublicacion: {
         type: [Schema.ObjectId],
         ref: 'publicacion',
