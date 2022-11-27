@@ -1,16 +1,20 @@
+const { ObjectId } = require('mongodb');
 const FileModel = require('../models/file');
-const Publicacion = require('../models/publicacion');
 
 const uploadNewFile = (req, res,err) => {
-    const { id } = req.params
+    let objId
+    try{
+        objId = new ObjectId(""+req.params.id);
+    } catch(err) {
+        return res.status(400).send({ message: "Error al subir el archivo" })
+    }
     const { files } = req;
-    
     let aux = files.map((file) => {
         const newFiles = new FileModel({
             url: file.path,
             name: file.originalname,
             mimeType: file.mimetype,
-            idPublicacion: id
+            idPublicacion: objId
         })
         newFiles.save((err, fileSaved) => {
             if (err) {

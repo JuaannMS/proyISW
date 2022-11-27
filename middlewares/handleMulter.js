@@ -1,12 +1,14 @@
 const multer = require('multer');
 const fs = require('fs');
+const { ObjectId } = require('mongodb');
+const Publicacion = require('../models/publicacion');
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         
         const { id } = req.params;
         const route = `./uploads/${id}`;
 
-        
      //   const route = './uploads/' + req.params.archivo;
         if (!fs.existsSync(route)) {
             fs.mkdirSync(route, { recursive: true });
@@ -25,6 +27,21 @@ const upload = multer({
     storage: storage,
     fileFilter: function (req, file, cb) {
         let valido = true
+        try{
+            let objId = new ObjectId(""+req.params.id);
+            Publicacion.findById(objId, (error, publicacion) => {
+                if (error) {
+                    valido = false
+                }
+                if (!publicacion) {
+                    valido = false
+                }
+            })
+        } catch(err) {
+            if (err.name === 'BSONTypeError'){
+                valido = false
+            }
+        }
         const formatosValidos = ['image/jpeg', 'image/png', 'image/jpg']
         if (formatosValidos.indexOf(file.mimetype) === -1)//no existe
         {
