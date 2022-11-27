@@ -1,9 +1,13 @@
 const multer = require('multer');
 const fs = require('fs');
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const route = './uploads/' + req.params.archivo;
+        
+        const { id } = req.params;
+        const route = `./uploads/${id}`;
+
+        
+     //   const route = './uploads/' + req.params.archivo;
         if (!fs.existsSync(route)) {
             fs.mkdirSync(route, { recursive: true });
         }
@@ -20,15 +24,17 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     fileFilter: function (req, file, cb) {
-        if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
-            console.log("El archivo es un png")
-        } else {
-            console.log("El archivo tiene otra extension")
+        let valido = true
+        const formatosValidos = ['image/jpeg', 'image/png', 'image/jpg']
+        if (formatosValidos.indexOf(file.mimetype) === -1)//no existe
+        {
+            valido = false
         }
-        cb(null, true)
+        cb(null, valido)
     },
     limits: {
-        fileSize: 1024 * 1024 * 15
+        fileSize: 1024 * 1024 * 30//30mb,
+        
     }
 })
 
