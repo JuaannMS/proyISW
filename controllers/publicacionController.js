@@ -1,11 +1,10 @@
 const Publicacion = require('../models/publicacion');
 const Usuario = require('../controllers/usuarioController');
 const { Query } = require('mongoose');
+const { FindCursor } = require('mongodb');
 
 const createPublicacion = (req, res) => {
 const Usuario = require('../models/usuario')
-
-
 
   const { titulo, descripcion,cantLikes,etiqueta,diasVisible,idUsuario } = req.body
   const fechaExp = new Date()
@@ -24,20 +23,28 @@ const Usuario = require('../models/usuario')
 
   newPublicacion.save((error, publicacion) => {
 
+    Publicacion.find({idUsuario, estado:true}).count().exec( (err,publicaciones)=>{
+      if(err){
+        return res.status(400).send({ message: "No se pudo crear la publicacion" })
+      }
+      if(publicaciones>3){
+        console.log(publicaciones)
+      return res.status(200).send({ message: "Maximo de publicaciones activas"+err})
+      }
+
+  })
+
     if (error) {
       return res.status(400).send({ message: "No se pudo crear la publicacion" + error })
     }
 
-    //console.log(" este "+numPublicacionesActXUsuario())
-    if ( 2<(numPublicacionesActXUsuario(idUsuario))){
-      //console.log("aca")
-      return res.status(400).send({ message: "Usted posee tres publicaciones activas" })
-    }
+
 
     Usuario.findByIdAndUpdate(idUsuario, { $push: { idPublicacion: publicacion.id } }, (error, usuario) => {
       if (error) {
         return res.status(400).send({ message: "No se pudo crear la publicacion" })
       }
+
       if (!usuario) {
         return res.status(404).send({ message: "No se encontro el usuario" })
       }
@@ -51,7 +58,7 @@ const Usuario = require('../models/usuario')
 const getPublicaciones = (req, res) => {  //publicaciones activas y con margen de tiempo
     const now = new Date()
     now.setDate(now.getDate() - 7); //filtro de tiemppo ,segundo parametro son los dias anteriores
-Publicacion.find({
+  Publicacion.find({
   estado:true, //comentar para que aparezcan todos mostrar solamente los activos
   fechaExp: { $gt:now } //fecha exp > hoy
 }
@@ -72,7 +79,7 @@ const getPublicacionesporEtiqueta = (req, res) => {
 //filtrar letras para igualar bien y sacar los {}:
 
 Publicacion.find({
-  etiqueta: " ", //funciona desde vs
+  //etiqueta: " ", //se cambiara por la caja de texto del frontend
   estado:true
 
 }, (error, publicacionesx) => {
@@ -104,7 +111,7 @@ const updatePublicacion = (req, res) => {
 
 }
 
-const deletePublicacion = (req, res) => {
+const deletePublicacion = (req, res) => { //puede pausar el admi y el usuario creador
   const { id } = req.params
   Publicacion.findByIdAndUpdate(id,{ $set: { estado: false }}//cambia estado de estadopublicacion
     , (error, Publicacion) => {
@@ -141,12 +148,22 @@ function setLikes(idPubli) {// retornar cantLikes de la publicacion
   console.log("Se dio me gusta");
 }
 
-const numPublicacionesActXUsuario = (idUsuario,res) => {
 
 
-var query = Publicacion.find({ $and: [{idUsuario:idUsuario} , {estado:true}]}).count()
+const numPublicacionesActXUsuario = (req, res ,idUsuario) => {
 
-//console.log("entra aca"+query)
+//console.log(idUsuario)
+Publicacion.find({idUsuario, estado:true}).count().exec( function (err,publicaciones) {
+
+    if(err){
+      return res.status(400).send({ message: "No se ha podido cambiar la publicacion" })
+    }
+    if(publicaciones>3){
+      res.send({ message: "Maximo de publicaciones activas"})
+    }
+    console.log(publicaciones)
+    //return res.status(200).send( {message: "numero de publicaciones"+publicaciones} )
+})
 
 }
 
