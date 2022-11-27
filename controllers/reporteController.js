@@ -4,16 +4,18 @@ const reporte = require('../models/reporte');
 /*Requerimiento: usuario puede hacer reporte de una publicación
 */
 const createReporte = (req, res) => {
-    const{ idPublicacion } = req.body
+    const{ idPublicacion, motivo, gravedad } = req.body
     const newReporte = new reporte({
-        idPublicacion
+        idPublicacion,
+        motivo,
+        gravedad
     })
     newReporte.save((error, reporte) =>{
         if(error){return res.status(400).send({ message: "No se pudo crear el reporte" })}
 
         publicacion.findByIdAndUpdate(idPublicacion, { $push: { idReportes: reporte.id } }, (error, publicacion) => {
             if (error) {
-              return res.status(400).send({ message: "No se pudo actualizar la cantidad de reportes" })
+              return res.status(421).send({ message: "No se pudo agregar el reporte a la publicación" })
             }
             if (!publicacion) {
               return res.status(404).send({ message: "No se encontró la publicacion" })
@@ -55,23 +57,60 @@ const deleteReportes = (req, res) => {
 
 }
 
-//para verificar que los cambios en la base de datos
-const getReportes = (req, res) => {
+//get de los reportes de una sola publicación
+const getReporte = (req, res) => {
+  const { idPublicacion} = req.body
+
+  publicacion.findById(idPublicacion, (error, publicacion) => {
+    if (error) {
+      return res.status(204).send({ message: "error al buscar la publicación de referencia" })
+    }
+    if (!publicacion) {
+      return res.status(404).send({ message: "No se ha encontrado la publicacion" })
+    }
+  })
+
+  reporte.find( {idPublicacion }, (error, reportes) => {
+  if(error){
+      return res.status(400).send({message: "No se realizó la busqueda del reporte"})}
+
+  if(!reportes){
+      return res.status(204).send({message: "La publicación no tiene reportes"})}
+
+  return res.status(200).send(reportes)
+  })
+}
+
+//get de todos los reportes en la base de datos
+const getALLReportes = (req, res) => {
     reporte.find({}, (error, reportes) => {
         if(error){
             return res.status(400).send({message: "No se realizó la busqueda"})
         }
-        if(reportes.length == 0){
-            return res.status(404).send({message: "No se han encontrado reportes"})
+        if(!reportes){
+            return res.status(204).send({message: "No se han encontrado reportes"})
         }
 
        return res.status(200).send(reportes)})
     }
 
-
+//update
+const updateReporte = (req, res) => {
+  const{ id } = req.params
+  reporte.findByIdAndUpdate(id, req.body, (error, reporte) =>{
+    if (error) {
+      return res.status(304).send({ message: "No se pudo actualizar el reporte" })}
+    if (!reporte) {
+    return res.status(404).send({ message: "No se encontró el reporte" })
+    }
+    return res.status(204).send({ message: "reporte modificado exitosamente" })
+  })
+}
 
 module.exports = {
     createReporte,
-    getReportes,
-    deleteReportes
+    deleteReportes,
+    getReporte,
+    getALLReportes,
+    updateReporte
 }

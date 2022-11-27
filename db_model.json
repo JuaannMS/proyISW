@@ -155,6 +155,18 @@
       "type": "Schema.ObjectId",
       "ref": "publicacion",
       "required": true
+    },
+    "motivo": {
+      "type": ["String"],
+      "required": true,
+      "minLength": 1,
+      "maxLength": 150
+    },
+    "gravedad": {
+      "type": ["String"],
+      "required": true,
+      "minLength": 1,
+      "maxLength": 20
     }
   },
   "file": {
