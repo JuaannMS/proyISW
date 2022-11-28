@@ -5,7 +5,8 @@ dotenv.config();
 const sendMail = (req, res) => {
     const { email, subject, text, periodoBaneo, motivoBaneo, publicacion } = req.body;
     const token = process.env.PW;
-    const user = process.env.USER;
+    const user = process.env.USUARIO;
+
     if (!token) {
         return res.status(400).send({ message: "No se ha definido la contraseña" })
     }
