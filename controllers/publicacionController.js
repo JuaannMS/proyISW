@@ -21,8 +21,6 @@ const Usuario = require('../models/usuario')
 
   newPublicacion.save((error, publicacion) => {
 
-    numPublicacionesActXUsuario(idUsuario);
-
     if (error) {
       return res.status(400).send({ message: "No se pudo crear la publicacion" + error })
     }
@@ -130,16 +128,8 @@ const getPublicacion = (req, res) => {
 const numPublicacionesActXUsuario = (idUsuario) => {
 
 //console.log(idUsuario)
-Publicacion.find({idUsuario, estado:true}).count().exec((error,publicaciones)=> {
-  if(error){
-    return error
-    }
-  console.log(publicaciones)
-  return publicaciones
-  }
-)
+Publicacion.find({ idUsuario ,estado:true }, (err,cant)=>{ console.log(cant)})
 
-console.log(" ")
 //git
 
 }
