@@ -12,6 +12,7 @@ const usuarioRoutes = require('./routes/usuarioRoutes');
 const mailerController = require ('./routes/mailerRoutes');
 const fileRoutes = require('./routes/fileRoutes');
 const reporteRoutes = require('./routes/reporteRoutes');
+const comentarioRoutes = require('./routes/comentarioRoutes');
 const favoritosRoutes = require('./routes/favoritosRoutes');
 const likesRoutes = require('./routes/likesRoutes');
 
@@ -24,6 +25,7 @@ app.use('/api', usuarioRoutes);
 app.use('/api', mailerController);
 app.use('/api', fileRoutes);
 app.use('/api', reporteRoutes);
+app.use('/api', comentarioRoutes);
 app.use('/api', favoritosRoutes);
 app.use('/api', likesRoutes);
 

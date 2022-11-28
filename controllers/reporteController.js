@@ -94,18 +94,22 @@ const getALLReportes = (req, res) => {
        return res.status(200).send(reportes)})
     }
 
+
 //update
 const updateReporte = (req, res) => {
   const{ id } = req.params
-  reporte.findByIdAndUpdate(id, req.body, (error, reporte) =>{
+
+  reporte.findOneAndUpdate(id, req.body, (error, reporte) =>{
     if (error) {
       return res.status(304).send({ message: "No se pudo actualizar el reporte" })}
+
     if (!reporte) {
-    return res.status(404).send({ message: "No se encontró el reporte" })
-    }
-    return res.status(204).send({ message: "reporte modificado exitosamente" })
+    return res.status(404).send({ message: "No se encontró el reporte" })}
   })
+
+  return res.status(200).send({ message: "reporte modificado" })
 }
+
 
 module.exports = {
     createReporte,
