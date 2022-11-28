@@ -9,6 +9,8 @@ const publicacionSchema = new Schema({
         minLength:1,
         maxLength:100
     },
+    /*para filtrar las publicaciones por
+    categoría o por tema*/
     etiqueta:{
         type: String,
         required:false,
@@ -49,6 +51,11 @@ const publicacionSchema = new Schema({
     idReportes:{
         type: [Schema.ObjectId],
         ref: 'reporte',
+        default: []
+    },
+    idComentarios:{
+        type: [Schema.ObjectId],
+        ref: 'comentario',
         default: []
     }
 },
