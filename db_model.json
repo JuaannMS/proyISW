@@ -97,14 +97,16 @@
       "type": "Schema.ObjectId",
       "ref": "usuario"
     },
-    "cantReportes": {
-      "type": [
-        "Schema.ObjectId"
-      ],
+    "idReportes": {
+      "type": ["Schema.ObjectId"],
       "ref": "reporte"
+    },
+    "idComentarios": {
+      "type": ["Schema.ObjectId"],
+      "ref": "comentario"
     }
   },
-  "comentarios": {
+  "comentario": {
     "id_": {
       "type": "Schema.ObjectId",
       "required": true
@@ -121,7 +123,7 @@
       "type": "Date",
       "default": "Date.now()"
     },
-    "comentario": {
+    "contenido": {
       "type": "String",
       "required": true,
       "minLength": 1,
