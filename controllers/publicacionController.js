@@ -1,7 +1,5 @@
 const Publicacion = require('../models/publicacion');
 const Usuario = require('../controllers/usuarioController');
-const { Query } = require('mongoose');
-const { FindCursor } = require('mongodb');
 
 const createPublicacion = (req, res) => {
 const Usuario = require('../models/usuario')
@@ -23,22 +21,11 @@ const Usuario = require('../models/usuario')
 
   newPublicacion.save((error, publicacion) => {
 
-    Publicacion.find({idUsuario, estado:true}).count().exec( (err,publicaciones)=>{
-      if(err){
-        return res.status(400).send({ message: "No se pudo crear la publicacion" })
-      }
-      if(publicaciones>3){
-        console.log(publicaciones)
-      return res.status(200).send({ message: "Maximo de publicaciones activas"+err})
-      }
-
-  })
+    numPublicacionesActXUsuario(idUsuario);
 
     if (error) {
       return res.status(400).send({ message: "No se pudo crear la publicacion" + error })
     }
-
-
 
     Usuario.findByIdAndUpdate(idUsuario, { $push: { idPublicacion: publicacion.id } }, (error, usuario) => {
       if (error) {
@@ -76,10 +63,9 @@ function(error, publicaciones) {
 }
 
 const getPublicacionesporEtiqueta = (req, res) => {
-//filtrar letras para igualar bien y sacar los {}:
 
 Publicacion.find({
-  //etiqueta: " ", //se cambiara por la caja de texto del frontend
+  etiqueta: " ", //se cambiara por la caja de texto del frontend
   estado:true
 
 }, (error, publicacionesx) => {
@@ -141,33 +127,22 @@ const getPublicacion = (req, res) => {
 }
 
 
-function setLikes(idPubli) {// retornar cantLikes de la publicacion
-  console.log(idPubli)
-  console.log()
-//Publicacion.findByIdAndUpdate( idPubli , { $set: { cantLikes: cantLikes+1 }} )
-  console.log("Se dio me gusta");
-}
-
-
-
-const numPublicacionesActXUsuario = (req, res ,idUsuario) => {
+const numPublicacionesActXUsuario = (idUsuario) => {
 
 //console.log(idUsuario)
-Publicacion.find({idUsuario, estado:true}).count().exec( function (err,publicaciones) {
+Publicacion.find({idUsuario, estado:true}).count().exec((error,publicaciones)=> {
+  if(error){
+    return error
+    }
+  console.log(publicaciones)
+  return publicaciones
+  }
+)
 
-    if(err){
-      return res.status(400).send({ message: "No se ha podido cambiar la publicacion" })
-    }
-    if(publicaciones>3){
-      res.send({ message: "Maximo de publicaciones activas"})
-    }
-    console.log(publicaciones)
-    //return res.status(200).send( {message: "numero de publicaciones"+publicaciones} )
-})
+console.log(" ")
+//git
 
 }
-
-//git
 module.exports = {
   createPublicacion,
   getPublicaciones,
@@ -175,6 +150,5 @@ module.exports = {
   deletePublicacion,
   getPublicacion,
   getPublicacionesporEtiqueta,
-  setLikes,
   numPublicacionesActXUsuario
 }

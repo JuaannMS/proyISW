@@ -113,21 +113,11 @@ const deleteUsuario = (req, res) => {
     )
 }
 
-function validarRol(rutt){
-
-    console.log(
-        Usuario.find({
-            rut: rutt
-        })
-    )
-
-}
 
 module.exports = {
     createUsuario,
     getUsuarios,
     updateUsuario,
-    deleteUsuario,
-    validarRol
+    deleteUsuario
 
 }

@@ -107,6 +107,7 @@ const updateReporte = (req, res) => {
   })
 }
 
+
 module.exports = {
     createReporte,
     deleteReportes,
