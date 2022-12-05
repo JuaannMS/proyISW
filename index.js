@@ -6,7 +6,6 @@ const app = express();
 dotenv.config();
 
 
-
 const publicacionRoutes = require('./routes/publicacionRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const mailerController = require ('./routes/mailerRoutes');
@@ -15,6 +14,7 @@ const reporteRoutes = require('./routes/reporteRoutes');
 const comentarioRoutes = require('./routes/comentarioRoutes');
 const favoritosRoutes = require('./routes/favoritosRoutes');
 const likesRoutes = require('./routes/likesRoutes');
+const rolRoutes = require('./utils/rolSetup');
 
 
 app.use(cors());
@@ -25,10 +25,11 @@ app.use('/api', usuarioRoutes);
 app.use('/api', mailerController);
 app.use('/api', fileRoutes);
 app.use('/api', reporteRoutes);
+app.use('/api', comentarioRoutes)
 app.use('/api', comentarioRoutes);
 app.use('/api', favoritosRoutes);
 app.use('/api', likesRoutes);
-
+app.use('/api', rolRoutes);
 
 const options = {
     useNewUrlParser: true,

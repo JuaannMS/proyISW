@@ -15,8 +15,7 @@ const createUsuario = (req,res) => {
         direccion,
         fechaCumpleanio,
         correo,
-        telefono,
-        admi
+        telefono
     })
 
     const validarCorreo = (correo)=>{

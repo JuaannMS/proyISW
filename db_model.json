@@ -47,6 +47,10 @@
         "Schema.ObjectId"
       ],
       "ref": "publicacion"
+    },
+    "rol": {
+      "type": "Schema.ObjectId",
+      "ref": "rol"
     }
   },
   "publicacion": {
@@ -188,6 +192,15 @@
       "type": "Schema.ObjectId",
       "ref": "publicacion",
       "required": true
+    }
+  },
+  "rol": {
+    "id_": {
+      "type": "Schema.ObjectId",
+      "required": true
+    },
+    "name": {
+      "type": "String"
     }
   }
 }
