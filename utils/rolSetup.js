@@ -7,9 +7,12 @@ const usuario = require('../models/usuario');
 /*#####################################
 Roles creados:
    name   | id
-
    admin    638e8c823fdb04c7747adbe8
    user     638d75db5792a7fe98e9cb9e
+
+Admin creados:
+rut: 19.896.942-7
+nombre: Gabriel Norambuena Muñoz
 ######################################*/
 
 
@@ -28,7 +31,7 @@ const createRoles = async (req, res) => {
       }
     return res.status(201).send(rol)})}
 
-    //si existe el rol:
+    //si existe:
     if(number != 0){
     return res.status(200).send({ message: "roles ya creados" })}
 }
@@ -55,7 +58,6 @@ const getALLRoles = (req, res) => {
     if(!roles){
         return res.status(204).send({message: "No se han encontrado roles"})
     }
-
    return res.status(200).send(roles)})
 }
 

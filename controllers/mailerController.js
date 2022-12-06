@@ -26,7 +26,7 @@ const sendMail = (req, res) => {
         subject: subject,
         text: text,
         html: `
-        <p>Querido usuario se le informa que usted ha sido baneado del sistema, los detalles los puede encontrar a acontinuación.</p>
+        <p>Querido vecino se le informa que usted ha sido baneado del sistema, los detalles los puede encontrar a acontinuación.</p>
         <p>Periodo ${periodoBaneo}</p>
         <p>Motivo: ${motivoBaneo}</p>
         <br>
