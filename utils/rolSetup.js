@@ -1,51 +1,66 @@
 const express = require('express');
+const { db } = require('../models/rol');
 const api = express.Router();
 const rol = require('../models/rol');
-
-/*Crea los roles de user y admin
-una sola vez en la bdd*/
+const usuario = require('../models/usuario');
 
 /*#####################################
-
 Roles creados:
- name  | id
- admin   638d815d66c83a4f9e0f2e20
- user    638d75db5792a7fe98e9cb9e
+   name   | id
 
+   admin    638e8c823fdb04c7747adbe8
+   user     638d75db5792a7fe98e9cb9e
 ######################################*/
 
 
-
+/*Crea los roles de user y admin
+una sola vez en la bdd*/
 const createRoles = async (req, res) => {
     const{ name } = req.body
     const newRol = new rol({name})
 
-    newRol.save((error, rol)=>{
-        if(error){return res.status(400).send({ message: "No se pudo crear el rol" })}
-    return res.status(201).send(rol)
-    })
+    const number = await rol.countDocuments({name});
+    //si no existe -> se crea
+    if(number == 0){
+      newRol.save((error, rol)=>{
+      if(error){
+        return res.status(400).send({ message: "No se pudo crear el rol" })
+      }
+    return res.status(201).send(rol)})}
+
+    //si existe el rol:
+    if(number != 0){
+    return res.status(200).send({ message: "roles ya creados" })}
 }
 
-const usuario = require('../models/usuario');
-const getRoles = async (req, res) => {
-    const {id} = req.body
-   /*  usuario.findById(id, (error, usuario) => {
-        if (error) {
-          return res.status(204).send({ message: "error al buscar al usuario" })
-        }
-        if (!usuario) {
-          return res.status(404).send({ message: "No se ha encontrado el usuario" })
-        }
-        return res.status(200).send(usuario.rol)
-      }) */
 
-  const userfound = usuario.findById(id);
+const getRolFromUser = async (req, res) => {
 
-  rol.findById({id: userfound.rol}, (error, rol) => {
-    return res.status(201).send(rol.name)
-  })
+  //recibe id del usuario
+  const {id} = req.body
+
+  const User = await usuario.findById(id);
+  const Rol = await rol.find({_id: { $in: User.rol}});
+
+  //Devuelve el rol (id del rol y nombre)
+  return res.status(200).send(Rol)
 }
 
-api.post('/rol/', createRoles);
-api.get('/roles', getRoles);
+
+const getALLRoles = (req, res) => {
+  rol.find({}, (error, roles) => {
+    if(error){
+        return res.status(400).send({message: "No se realizó la busqueda"})
+    }
+    if(!roles){
+        return res.status(204).send({message: "No se han encontrado roles"})
+    }
+
+   return res.status(200).send(roles)})
+}
+
+api.post('/rol', createRoles);
+api.get('/rol/user', getRolFromUser);
+api.get('/rol/all', getALLRoles);
+
 module.exports = api
